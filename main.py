@@ -93,7 +93,6 @@ def go(config: DictConfig):
             
             )
 
-
         if "train_random_forest" in active_steps:
 
             # NOTE: we need to serialize the random forest configuration into JSON
@@ -113,6 +112,30 @@ def go(config: DictConfig):
                         "max_tfidf_features": config['modeling']['max_tfidf_features'],
                         "output_artifact": 'random_forest_export'},
                 )
+
+        # if "train_random_forest_prod" in active_steps:
+
+        #     # NOTE: we need to serialize the random forest configuration into JSON
+        #     rf_config = os.path.abspath("rf_config.json")
+        #     with open(rf_config, "w+") as fp:
+        #         json.dump(dict(config["modeling"]["random_forest"].items()), fp)  
+
+        #     # Train the model
+        #     _ = mlflow.run(
+        #             https://github.com/VMK11/nd0821-c2-build-model-workflow-starter.git \
+        #                 -v [the version you want to use, like 1.0.0] \
+        #                 -P hydra_options="etl.sample='sample2.csv'" \
+                    
+        #             os.path.join(hydra.utils.get_original_cwd(), "src", "train_random_forest"),
+        #             "main",
+        #             parameters={
+        #                 "trainval_artifact": "trainval_data.csv:latest",
+        #                 "val_size": config['modeling']['val_size'],
+        #                 "stratify_by": config['modeling']['stratify_by'],
+        #                 "rf_config": rf_config,
+        #                 "max_tfidf_features": config['modeling']['max_tfidf_features'],
+        #                 "output_artifact": 'random_forest_export'},
+        #         )
 
         if "test_regression_model" in active_steps:
 
