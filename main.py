@@ -48,7 +48,7 @@ def go(config: DictConfig):
                     "artifact_description": "Raw file as downloaded"
                 },
             )
-        
+
         if "basic_cleaning" in active_steps:
             
             _ = mlflow.run(
@@ -78,7 +78,6 @@ def go(config: DictConfig):
 
 
             )
-
         if "data_split" in active_steps:
             _ = mlflow.run(
                 f"{config['main']['components_repository']}/train_val_test_split",
@@ -94,13 +93,11 @@ def go(config: DictConfig):
             )
 
         if "train_random_forest" in active_steps:
-
-            # NOTE: we need to serialize the random forest configuration into JSON
             rf_config = os.path.abspath("rf_config.json")
             with open(rf_config, "w+") as fp:
                 json.dump(dict(config["modeling"]["random_forest"].items()), fp)  
 
-            # Train the model
+                # Train the model
                 _ = mlflow.run(
                     os.path.join(hydra.utils.get_original_cwd(), "src", "train_random_forest"),
                     "main",
